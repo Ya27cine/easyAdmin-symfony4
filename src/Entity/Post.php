@@ -40,7 +40,8 @@ class Post
     private $published;
 
     /**
-     * @ORM\Column(type="string", length=120)
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $autor;
 
@@ -85,18 +86,6 @@ class Post
         return $this;
     }
 
-    public function getAutor(): ?string
-    {
-        return $this->autor;
-    }
-
-    public function setAutor(string $autor): self
-    {
-        $this->autor = $autor;
-
-        return $this;
-    }
-
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -105,6 +94,18 @@ class Post
     public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getAutor(): ?User
+    {
+        return $this->autor;
+    }
+
+    public function setAutor(?User $autor): self
+    {
+        $this->autor = $autor;
 
         return $this;
     }

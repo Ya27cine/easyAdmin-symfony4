@@ -25,9 +25,14 @@ class Comment
     private $content;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="datetime", nullable=false)
      */
     private $published;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
+     */
+    private $autor;
 
     public function getId(): ?int
     {
@@ -46,15 +51,29 @@ class Comment
         return $this;
     }
 
-    public function getPublished(): ?string
+    public function getPublished(): ?\DateTimeInterface
     {
         return $this->published;
     }
 
-    public function setPublished(string $published): self
+    public function setPublished(\DateTimeInterface $published): self
     {
         $this->published = $published;
 
         return $this;
     }
+
+    public function getAutor(): ?User
+    {
+        return $this->autor;
+    }
+
+    public function setAutor(?User $autor): self
+    {
+        $this->autor = $autor;
+
+        return $this;
+    }
+
+   
 }
