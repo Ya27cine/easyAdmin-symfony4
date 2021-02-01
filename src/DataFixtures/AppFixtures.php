@@ -4,13 +4,18 @@ namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Entity\Comment;
 
-
 class AppFixtures extends Fixture
 {
+    private $userPass;
+    function __construct(UserPasswordEncoderInterface $userPass)
+    {
+        $this->userPass = $userPass;
+    }
     public function load(ObjectManager $manager)
     {
         $this->loadUser($manager);
@@ -32,7 +37,6 @@ class AppFixtures extends Fixture
             $post->setAutor($user);
             $manager->persist( $post );
             $manager->flush();
-
     }
      /**
      * Fct add User
@@ -42,7 +46,7 @@ class AppFixtures extends Fixture
         $user->setUsername("Ya27cine");
         $user->setEmail("yacinemosta910@gmail.com");
         $user->setName("Khelifa Yassine");
-        $user->setPassword("PassW@rd");
+        $user->setPassword($this->userPass->encodePassword($user, "passw@rd"));
 
         $this->setReference("admin_user", $user);
 
