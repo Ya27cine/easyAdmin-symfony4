@@ -24,7 +24,7 @@ class AppFixtures extends Fixture
     {
         $this->loadUser($manager);
         $this->loadPost($manager);
-      //  $this->loadUser($manager);
+        $this->loadComment($manager);
 
 
     }
@@ -40,6 +40,9 @@ class AppFixtures extends Fixture
             $post->setContent($this->faker->realText());
             $user = $this->getReference("admin_user_". rand(0, 9));
             $post->setAutor($user);
+             
+            $this->addReference("post_".$i, $post);
+
             $manager->persist( $post );
         }
             
@@ -69,6 +72,21 @@ class AppFixtures extends Fixture
      * Fct add Comment
      */
     private function loadComment(ObjectManager $manager){
-      
+        for ($i=0; $i < 100; $i++) { 
+            $comment = new Comment();
+            $comment->setContent( $this->faker->realText());
+            $comment->setPublished( new \DateTime());
+
+
+            $user  = $this->getReference("admin_user_". rand(0, 9));
+            $post  = $this->getReference("post_". rand(0, 99));
+
+            $comment->setAutor( $user );
+            $comment->setPost( $post );
+
+            $manager->persist( $comment );
+        }
+       
+        $manager->flush();
     }
 }
