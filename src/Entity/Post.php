@@ -8,7 +8,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 /**
- * @ApiResource()
+ * @ApiResource(
+ *  itemOperations={"GET"},
+ *  collectionOperations={"GET"}
+ * )
  * @ORM\Entity(repositoryClass=PostRepository::class)
  */
 #[ApiResource]
