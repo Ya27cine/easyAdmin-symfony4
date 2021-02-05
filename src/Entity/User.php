@@ -49,6 +49,7 @@ class User implements UserInterface
      * @Assert\NotBlank()
      * @Assert\Length(min=4, max=50, minMessage="ce champ doit avoir au moins {{ limit }} chars", maxMessage="ce champ ne doit pas depasser {{ limit }} chars")
      * @Groups({"read"})
+     * @Assert\Regex(pattern="/^[a-z]+$/i", message="ce champ n'est pas respecter ce modele")
      */
     private $name;
 
