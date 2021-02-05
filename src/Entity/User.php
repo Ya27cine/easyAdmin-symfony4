@@ -34,7 +34,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"read"})
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="ce champ est obligatoire !")
      */
     private $username;
 
@@ -47,7 +47,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
-     * @Assert\Length(min=6, max=50)
+     * @Assert\Length(min=4, max=50, minMessage="ce champ doit avoir au moins {{ limit }} chars", maxMessage="ce champ ne doit pas depasser {{ limit }} chars")
      * @Groups({"read"})
      */
     private $name;
