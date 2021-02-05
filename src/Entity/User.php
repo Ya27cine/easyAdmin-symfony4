@@ -44,6 +44,12 @@ class User implements UserInterface
      */
     private $password;
 
+     /**
+     * @Assert\NotBlank()
+     * @Assert\Expression( "this.getPassword() === this.getRetypedPassword()" )
+     */
+    private $retypedPassword;
+
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
@@ -107,6 +113,20 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getRetypedPassword(): ?string
+    {
+        return $this->retypedPassword;
+    }
+
+    public function setRetypedPassword(string $password): self
+    {
+        $this->retypedPassword = $password;
+
+        return $this;
+    }
+
+
+    
     public function getName(): ?string
     {
         return $this->name;
