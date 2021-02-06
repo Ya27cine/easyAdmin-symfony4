@@ -13,6 +13,7 @@
         "doctrine/orm": "^2.7",
         "easycorp/easyadmin-bundle": "^2.3",
         "fzaninotto/faker": "^1.9",
+        "lexik/jwt-authentication-bundle": "^2.10",
         "nelmio/cors-bundle": "^2.1",
         "phpdocumentor/reflection-docblock": "^4.3",
         "sensio/framework-extra-bundle": "^5.5",
