@@ -35,6 +35,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
      * @Groups({"read"})
      * @Assert\NotBlank(message="ce champ est obligatoire !")
      */
