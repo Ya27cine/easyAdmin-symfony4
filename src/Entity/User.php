@@ -14,7 +14,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource(
- *  itemOperations={"GET", "DELETE"},
+ *  itemOperations={
+ *      "GET"={
+ *              "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')"
+ *       },
+ *      "DELETE"
+ *  },
  *  collectionOperations={"GET", "POST"},
  *  normalizationContext={
  *      "groups"={"read"}
