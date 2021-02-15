@@ -6,11 +6,16 @@ use App\Repository\PostRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * @ApiResource(
  *  itemOperations={"GET"},
- *  collectionOperations={"GET"},
+ *  collectionOperations={"GET",
+ *                        "POST"={
+ *                           "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')"
+ *                          }
+ *  },
  *  normalizationContext={
  *      "groups"={"read"}
  *  }
@@ -34,6 +39,8 @@ class Post
 
       /**
      * @ORM\Column(type="string", length=100, nullable=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=10, max=77)
      */
     private $title;
 
@@ -44,12 +51,13 @@ class Post
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\DateTime()
      */
     private $published;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="posts")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=false)
      */
     private $autor;
 
