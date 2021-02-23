@@ -10,7 +10,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Annotation\ApiResource;
 /**
  * @ApiResource(
- *  itemOperations={"GET"},
+ *  itemOperations={"GET", 
+ *                       "PUT"={
+ *                           "access_control" = "is_granted('IS_AUTHENTICATED_FULLY') and object.getAutor() == user"
+ *                          }
+ * },
  *  collectionOperations={"GET",
  *                        "POST"={
  *                           "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')"
