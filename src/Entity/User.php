@@ -16,11 +16,25 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource(
  *  itemOperations={
  *      "GET"={
- *              "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')"
- *       },
+ *              "access_control" = "is_granted('IS_AUTHENTICATED_FULLY')",
+ *              "normalization-context" ={
+ *                  "groups"={"get"}
+ *              }
+ *       }
+ *      "PUT"={
+ *          "access_control" = "is_granted('IS_AUTHENTICATED_FULLY') and object == user",
+ *          "denormalization-context" ={
+ *                  "groups"={"put"}
+ *          }
+ *      }
  *      "DELETE"
  *  },
- *  collectionOperations={"GET", "POST"},
+ *  collectionOperations={"GET", "POST"={
+ *                                      "denormalization-context" ={
+ *                                          "groups"={"post"}
+ *                                       }
+ *                                }
+ *  },
  *  normalizationContext={
  *      "groups"={"read"}
  *  }
@@ -34,14 +48,13 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"read"})
+     * @Groups({ "get", "post"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * 
-     * @Groups({"read"})
+     * @Groups({"get", "post"})
      * @Assert\NotBlank(message="ce champ est obligatoire !")
      */
     private $username;
@@ -62,7 +75,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(min=4, max=50, minMessage="ce champ doit avoir au moins {{ limit }} chars", maxMessage="ce champ ne doit pas depasser {{ limit }} chars")
-     * @Groups({"read"})
+     * @Groups({"put", "get", "post"})
      * @Assert\Regex(pattern="/^[a-z]+$/i", message="ce champ n'est pas respecter ce modele")
      */
     private $name;
@@ -71,6 +84,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Email()
+     * @Groups({ "post"})
      */
     private $email;
 
